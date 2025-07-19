@@ -29,12 +29,25 @@ function App() {
   }
 
   const [EditScreen, setEditScreen] = useState(false)
+  const [KeyValue, setKeyValue] = useState()
+  const [DisableBtn, setDisableBtn] = useState(false);
 
   const EditTask = (key) => {
-    setEditScreen(!EditScreen)
+    setKeyValue(key)
+    setEditScreen(true);
+    setDisableBtn(true);
+    console.log("Key value ",KeyValue)
     setSingleValue(tasks[key])
+  }
 
+  const UpdatedValue = () => {
+    console.log(singleValue);
+    setDisableBtn(false);
+    setEditScreen(false);
 
+    const UpdatedArr = tasks.map((e,i) => i === KeyValue ? console.log("yes") : console.log("False"));
+    // setTasks(...tasks, UpdatedArr)
+    setSingleValue("");
   }
 
   return (
@@ -44,23 +57,12 @@ function App() {
         <div className='d-flex justify-content-center align-items-center mt-5'>
           <InputField value={(e) => { setSingleValue(e.target.value) }} remover={singleValue} />
           {EditScreen === true ? <>
-            <button className='btn btn-primary ms-2'>Confirm</button>
+            <button onClick={UpdatedValue} className='btn btn-primary ms-2'>Confirm</button>
             <button className='btn btn-danger ms-2'>Cancel</button>
           </> : <>
             <AddButton value={HandlerAdd} />
             <DeleteButton value={HandlerDelete} />
           </>}
-        </div>
-
-        <div>
-          {/* {EditScreen === true ? <>
-            <div className='d-flex justify-content-center align-items-center mt-5'>
-              <InputField value={(e) => { setSingleValue(e.target.value) }} remover={singleValue} />
-              <AddButton value={HandlerAdd} />
-              <DeleteButton value={HandlerDelete} />
-            </div>
-          </>: <><div></div></>} */}
-
         </div>
 
         <div className='mt-4'>
@@ -69,7 +71,7 @@ function App() {
               <div className='d-flex justify-content-center align-items-center bg-color my-1' key={i}>
                 <div className=' h-100 p-3'>Task {i + 1}</div>
                 <div className='version p-3'>{e}</div>
-                <div><button onClick={() => { EditTask(i) }} className='btn btn-primary ms-2'>Edit</button></div>
+                <div><button onClick={() => { EditTask(i) }} disabled={DisableBtn} className='btn btn-primary ms-2'>Edit</button></div>
                 <div><DeleteTaskButton value={() => { DeleteTask(i) }} /></div>
 
               </div>
