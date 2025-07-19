@@ -14,6 +14,7 @@ function App() {
   const HandlerAdd = () => {
     setTasks([...tasks, singleValue]);
     setSingleValue("");
+    console.log(tasks)
   }
 
   const HandlerDelete = () => {
@@ -36,18 +37,23 @@ function App() {
     setKeyValue(key)
     setEditScreen(true);
     setDisableBtn(true);
-    console.log("Key value ",KeyValue)
     setSingleValue(tasks[key])
   }
 
   const UpdatedValue = () => {
-    console.log(singleValue);
+    const updatedTasks = tasks.map((e, i) => i === KeyValue ? singleValue : e);
+    setTasks(updatedTasks);
     setDisableBtn(false);
     setEditScreen(false);
-
-    const UpdatedArr = tasks.map((e,i) => i === KeyValue ? console.log("yes") : console.log("False"));
-    // setTasks(...tasks, UpdatedArr)
     setSingleValue("");
+    setKeyValue(undefined);
+  }
+
+  const CancelEdit = () => {
+    setDisableBtn(false);
+    setEditScreen(false);
+    setSingleValue("");
+    setKeyValue(undefined);
   }
 
   return (
@@ -58,7 +64,7 @@ function App() {
           <InputField value={(e) => { setSingleValue(e.target.value) }} remover={singleValue} />
           {EditScreen === true ? <>
             <button onClick={UpdatedValue} className='btn btn-primary ms-2'>Confirm</button>
-            <button className='btn btn-danger ms-2'>Cancel</button>
+            <button onClick={CancelEdit} className='btn btn-danger ms-2'>Cancel</button>
           </> : <>
             <AddButton value={HandlerAdd} />
             <DeleteButton value={HandlerDelete} />
@@ -68,10 +74,11 @@ function App() {
         <div className='mt-4'>
           {tasks.map((e, i) => {
             return (
+              
               <div className='d-flex justify-content-center align-items-center bg-color my-1' key={i}>
-                <div className=' h-100 p-3'>Task {i + 1}</div>
-                <div className='version p-3'>{e}</div>
-                <div><button onClick={() => { EditTask(i) }} disabled={DisableBtn} className='btn btn-primary ms-2'>Edit</button></div>
+                <div className='h-100 px-3 py-2 m-2 border_setting'>Task {i + 1}</div>
+                <div className='version px-3 py-2 m-2 border_setting'>{e}</div>
+                <div><button onClick={() => { EditTask(i) }} disabled={DisableBtn} className='btn btn-primary ms-2 '>Edit</button></div>
                 <div><DeleteTaskButton value={() => { DeleteTask(i) }} /></div>
 
               </div>

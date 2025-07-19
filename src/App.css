@@ -7,3 +7,8 @@
     border-radius: 5px;
     font-weight: bold;
 }
+
+.border_setting {
+    border: 1px solid black !important;
+    border-radius: 5px;
+}
