@@ -1,0 +1,9 @@
+.version {
+    width:70%
+}
+
+.bg-color {
+    background-color: rgb(226 225 225);
+    border-radius: 5px;
+    font-weight: bold;
+}
